@@ -26,6 +26,13 @@ public class BookPurchaseTest {
         Assertions.assertThat(book.getShoppingAmount(books)).isEqualTo(15.2);
     }
 
+    @Test
+    @DisplayName("Should return amount with discount 10% after purchase of 3 different books")
+    void shouldReturnAmountWith10Discount_afterPurchase3Books(){
+        List<String> books = List.of("Kamień Filozoficzny","Komnata Tajemnic", "Zakon Feniksa");
+        Assertions.assertThat(book.getShoppingAmount(books)).isEqualTo(21.6);
+    }
+
 
 
 }

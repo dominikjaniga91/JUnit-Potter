@@ -7,7 +7,8 @@ import java.util.stream.Stream;
 public class BookPurchase {
 
     Map<String, Double> bookStore = Map.of("Kamień Filozoficzny", 8.0,
-                                        "Komnata Tajemnic",8.0);
+                                            "Komnata Tajemnic",8.0,
+                                            "Zakon Feniksa", 8.0);
 
     Map<Integer, Double> discounts = Map.of(1, 1.0,
                                             2, 0.95,
