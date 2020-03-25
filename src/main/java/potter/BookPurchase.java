@@ -4,12 +4,6 @@ import java.util.*;
 
 public class BookPurchase {
 
-//    Map<String, Double> bookStore = Map.of("Kamień Filozoficzny", 8.0,
-//                                            "Komnata Tajemnic",8.0,
-//                                            "Więzień Askabanu",8.0,
-//                                            "Czara Ognia",8.0,
-//                                            "Zakon Feniksa", 8.0);
-
     private final double BOOK_PRICE = 8.0;
 
     Map<Integer, Double> discounts = Map.of(1, 1.0,
@@ -20,11 +14,17 @@ public class BookPurchase {
 
     public double getShoppingCost(Map<String,Integer> purchasedBooks) {
 
-        return Math.min(defaultDiscountCalculation(purchasedBooks), alternativeDiscountCalculation(purchasedBooks));
+        if(getAmountOfBooks(purchasedBooks) < 8){
+            return defaultDiscountCalculation(purchasedBooks);
+        }else if(getAmountOfBooks(purchasedBooks) == 8){
+            return  2*4*BOOK_PRICE* discounts.get(4);
+        }else{
+            return Math.min(defaultDiscountCalculation(purchasedBooks), alternativeDiscountCalculation(purchasedBooks));
+        }
+
     }
 
     public double defaultDiscountCalculation(Map<String,Integer> purchasedBooks) {
-
 
         double overallCost = 0.0;
         int maxUnitsOfSingleBook = gatMaxUnitsOfSingleBook(purchasedBooks);
@@ -59,16 +59,12 @@ public class BookPurchase {
 
         int amountOfBooks = getAmountOfBooks(purchasedBooks);
 
-        if(amountOfBooks == 8){
-            return  2*4*BOOK_PRICE* discounts.get(4);
-        }else{
-            //amountOfBooks = 5*rate + 4*rate + modulo
-            int rate = amountOfBooks / 9;
-            int modulo = amountOfBooks % 9;
+        //amountOfBooks = 5*rate + 4*rate + modulo
+        int rate = amountOfBooks / 9;
+        int modulo = amountOfBooks % 9;
 
-            return BOOK_PRICE*(rate*(5* discounts.get(5) + 4*discounts.get(4)) + modulo*discounts.get(modulo));
-
-        }
+        double wynik = BOOK_PRICE*(rate*(5* discounts.get(5) + 4*discounts.get(4)) + modulo*Objects.requireNonNullElse(discounts.get(modulo),discounts.get(modulo/2)));
+        return wynik;
     }
 
     private int getAmountOfBooks(Map<String, Integer> purchasedBooks) {
