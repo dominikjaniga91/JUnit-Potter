@@ -14,34 +14,68 @@ public class BookPurchase {
 
     Map<Integer, Double> discounts = Map.of(1, 1.0,
                                             2, 0.95,
-                                            3,0.9,
-                                            4,0.8,
-                                            5,0.75);
+                                            3, 0.9,
+                                            4, 0.8,
+                                            5, 0.75);
 
-    public double getShoppingAmount(Map<String,Integer> purchasedBooks) {
+    public double getShoppingCost(Map<String,Integer> purchasedBooks) {
 
-        double shoppingAmount = 0.0;
-        int availableBooks = 0;
-        int amountOfBooks = 0;
-        int maxAmountOfOneBook = mostNumerousBook(purchasedBooks);
-
-        for (Map.Entry<String,Integer> book :  purchasedBooks.entrySet()) {
-
-            shoppingAmount += BOOK_PRICE;
-            availableBooks++;
-
-        }
-
-        shoppingAmount *= discounts.get(availableBooks);
-
-        return shoppingAmount;
+        return Math.min(defaultDiscountCalculation(purchasedBooks), alternativeDiscountCalculation(purchasedBooks));
     }
 
-    private int mostNumerousBook(Map<String,Integer> purchasedBooks){
+    public double defaultDiscountCalculation(Map<String,Integer> purchasedBooks) {
+
+
+        double overallCost = 0.0;
+        int maxUnitsOfSingleBook = gatMaxUnitsOfSingleBook(purchasedBooks);
+
+        for(int i=1; i <= maxUnitsOfSingleBook; i++){
+            int availableBooks = 0;
+            double shoppingAmount = 0.0;
+            for (Map.Entry<String,Integer> book :  purchasedBooks.entrySet()) {
+
+                if(book.getValue() >= i){
+                    shoppingAmount += BOOK_PRICE;
+                    availableBooks++;
+                }
+
+            }
+            shoppingAmount *= discounts.get(availableBooks);
+            overallCost += shoppingAmount;
+        }
+
+        return overallCost;
+    }
+
+    private int gatMaxUnitsOfSingleBook(Map<String,Integer> purchasedBooks){
         int maxValue = 0;
-        for (int i=1; i<= purchasedBooks.values().size(); i++) {
-            maxValue = Math.max(i, (i - 1));
+        for (Map.Entry<String,Integer> book :  purchasedBooks.entrySet()) {
+            maxValue = Math.max(maxValue, book.getValue());
         }
         return maxValue;
+    }
+
+    private double alternativeDiscountCalculation(Map<String,Integer> purchasedBooks){
+
+        int amountOfBooks = getAmountOfBooks(purchasedBooks);
+
+        if(amountOfBooks == 8){
+            return  2*4*BOOK_PRICE* discounts.get(4);
+        }else{
+            //amountOfBooks = 5*rate + 4*rate + modulo
+            int rate = amountOfBooks / 9;
+            int modulo = amountOfBooks % 9;
+
+            return BOOK_PRICE*(rate*(5* discounts.get(5) + 4*discounts.get(4)) + modulo*discounts.get(modulo));
+
+        }
+    }
+
+    private int getAmountOfBooks(Map<String, Integer> purchasedBooks) {
+        int amountOfBooks =0;
+        for (Map.Entry<String,Integer> book :  purchasedBooks.entrySet()) {
+                amountOfBooks += book.getValue();
+        }
+        return amountOfBooks;
     }
 }
