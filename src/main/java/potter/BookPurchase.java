@@ -63,8 +63,7 @@ public class BookPurchase {
         int rate = amountOfBooks / 9;
         int modulo = amountOfBooks % 9;
 
-        double wynik = BOOK_PRICE*(rate*(5* discounts.get(5) + 4*discounts.get(4)) + modulo*Objects.requireNonNullElse(discounts.get(modulo),discounts.get(modulo/2)));
-        return wynik;
+        return BOOK_PRICE*(rate*(5* discounts.get(5) + 4*discounts.get(4)) + modulo*Objects.requireNonNullElse(discounts.get(modulo),discounts.get(modulo/2)));
     }
 
     private int getAmountOfBooks(Map<String, Integer> purchasedBooks) {
