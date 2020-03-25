@@ -38,21 +38,15 @@ public class BookPurchase {
                     shoppingAmount += BOOK_PRICE;
                     availableBooks++;
                 }
-
             }
             shoppingAmount *= discounts.get(availableBooks);
             overallCost += shoppingAmount;
         }
-
         return overallCost;
     }
 
     private int gatMaxUnitsOfSingleBook(Map<String,Integer> purchasedBooks){
-        int maxValue = 0;
-        for (Map.Entry<String,Integer> book :  purchasedBooks.entrySet()) {
-            maxValue = Math.max(maxValue, book.getValue());
-        }
-        return maxValue;
+        return purchasedBooks.values().stream().reduce(0,Integer::max);
     }
 
     private double alternativeDiscountCalculation(Map<String,Integer> purchasedBooks){
@@ -67,10 +61,6 @@ public class BookPurchase {
     }
 
     private int getAmountOfBooks(Map<String, Integer> purchasedBooks) {
-        int amountOfBooks =0;
-        for (Map.Entry<String,Integer> book :  purchasedBooks.entrySet()) {
-                amountOfBooks += book.getValue();
-        }
-        return amountOfBooks;
+        return purchasedBooks.values().stream().reduce(0,Integer::sum);
     }
 }
