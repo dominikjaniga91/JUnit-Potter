@@ -102,6 +102,13 @@ public class BookPurchaseTest {
     }
 
     @Test
+    @DisplayName("Should return amount with best discount after purchase 8 books - 4x2")
+    void shouldReturnAmountWithDiscount_afterPurchase2x4Books(){
+        Map<String,Integer> books = Map.of("Kamień Filozoficzny",2 ,"Komnata Tajemnic",2 , "Więzień Askabanu",2 , "Czara Ognia",2);
+        Assertions.assertThat(book.getShoppingCost(books)).isEqualTo(51.2);
+    }
+
+    @Test
     @DisplayName("Should return amount with best discount after purchase 7 books - 5 different and 2 doubled")
     void shouldReturnAmountWithDiscount_afterPurchase7Books(){
         Map<String,Integer> books = Map.of("Kamień Filozoficzny",2 ,"Komnata Tajemnic",2 , "Więzień Askabanu",1 , "Czara Ognia",1 , "Zakon Feniksa",1);
