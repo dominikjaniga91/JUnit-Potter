@@ -12,6 +12,14 @@ public class BookPurchase {
                                             4, 0.8,
                                             5, 0.75);
 
+    static int gatMaxUnitsOfSingleBook(Map<String,Integer> purchasedBooks){
+        return purchasedBooks.values().stream().reduce(0,Integer::max);
+    }
+
+    static int getAmountOfBooks(Map<String, Integer> purchasedBooks) {
+        return purchasedBooks.values().stream().reduce(0,Integer::sum);
+    }
+
     public double getShoppingCost(Map<String,Integer> purchasedBooks) {
 
         if(getAmountOfBooks(purchasedBooks) < 8){
@@ -45,9 +53,7 @@ public class BookPurchase {
         return overallCost;
     }
 
-    static int gatMaxUnitsOfSingleBook(Map<String,Integer> purchasedBooks){
-        return purchasedBooks.values().stream().reduce(0,Integer::max);
-    }
+
 
     private double alternativeDiscountCalculation(Map<String,Integer> purchasedBooks){
 
@@ -60,7 +66,5 @@ public class BookPurchase {
         return BOOK_PRICE*(rate*(5* discounts.get(5) + 4*discounts.get(4)) + modulo*discounts.get(modulo));
     }
 
-    static int getAmountOfBooks(Map<String, Integer> purchasedBooks) {
-        return purchasedBooks.values().stream().reduce(0,Integer::sum);
-    }
+
 }
