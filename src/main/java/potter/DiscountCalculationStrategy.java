@@ -2,8 +2,10 @@ package potter;
 
 import java.util.Map;
 
-public interface DiscountCalculationStrategy {
+public abstract class DiscountCalculationStrategy {
 
-    Double calculation(Map<String,Integer> purchasedBooks);
+    Double calculation(Map<String, Integer> purchasedBooks) {
+        return null;
+    }
 
 }

@@ -3,7 +3,7 @@ package potter;
 import java.util.Map;
 import static potter.BookPurchase.*;
 
-public class DefaultDiscountCalculation implements DiscountCalculationStrategy {
+public class DefaultDiscountCalculation extends DiscountCalculationStrategy {
 
     @Override
     public Double calculation(Map<String, Integer> books) {
