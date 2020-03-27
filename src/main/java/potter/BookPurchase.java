@@ -4,9 +4,9 @@ import java.util.*;
 
 public class BookPurchase {
 
-    private final double BOOK_PRICE = 8.0;
+    final static double BOOK_PRICE = 8.0;
 
-    Map<Integer, Double> discounts = Map.of(1, 1.0,
+    static Map<Integer, Double> discounts = Map.of(1, 1.0,
                                             2, 0.95,
                                             3, 0.9,
                                             4, 0.8,
@@ -45,7 +45,7 @@ public class BookPurchase {
         return overallCost;
     }
 
-    private int gatMaxUnitsOfSingleBook(Map<String,Integer> purchasedBooks){
+    static int gatMaxUnitsOfSingleBook(Map<String,Integer> purchasedBooks){
         return purchasedBooks.values().stream().reduce(0,Integer::max);
     }
 
@@ -60,7 +60,7 @@ public class BookPurchase {
         return BOOK_PRICE*(rate*(5* discounts.get(5) + 4*discounts.get(4)) + modulo*discounts.get(modulo));
     }
 
-    private int getAmountOfBooks(Map<String, Integer> purchasedBooks) {
+    static int getAmountOfBooks(Map<String, Integer> purchasedBooks) {
         return purchasedBooks.values().stream().reduce(0,Integer::sum);
     }
 }
