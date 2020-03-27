@@ -6,9 +6,9 @@ import static potter.BookPurchase.*;
 public class AlternativeDiscountCalculation implements DiscountCalculationStrategy {
 
     @Override
-    public Double discountCalculation(Map<String, Integer> purchasedBooks) {
+    public Double calculation(Map<String, Integer> books) {
 
-        int amountOfBooks = getAmountOfBooks(purchasedBooks);
+        int amountOfBooks = getAmountOfBooks(books);
 
         //amountOfBooks = 5*rate + 4*rate + modulo
         int rate = amountOfBooks / 9;

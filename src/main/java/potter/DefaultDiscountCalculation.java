@@ -6,23 +6,23 @@ import static potter.BookPurchase.*;
 public class DefaultDiscountCalculation implements DiscountCalculationStrategy {
 
     @Override
-    public Double discountCalculation(Map<String, Integer> purchasedBooks) {
+    public Double calculation(Map<String, Integer> books) {
 
         double overallCost = 0.0;
-        int maxUnitsOfSingleBook = gatMaxUnitsOfSingleBook(purchasedBooks);
+        int units = gatMaxUnitsOfSingleBook(books);
 
-        for(int i=1; i <= maxUnitsOfSingleBook; i++){
-            int availableBooks = 0;
-            double shoppingAmount = 0.0;
-            for (Map.Entry<String,Integer> book :  purchasedBooks.entrySet()) {
+        for(int i=1; i <= units; i++){
+            int discountLevel = 0;
+            double cost = 0.0;   // temporary cost of several different books
+            for (Map.Entry<String,Integer> book :  books.entrySet()) {
 
                 if(book.getValue() >= i){
-                    shoppingAmount += BOOK_PRICE;
-                    availableBooks++;
+                    cost += BOOK_PRICE;
+                    discountLevel++;
                 }
             }
-            shoppingAmount *= discounts.get(availableBooks);
-            overallCost += shoppingAmount;
+            cost *= discounts.get(discountLevel);
+            overallCost += cost;
         }
         return overallCost;
     }
